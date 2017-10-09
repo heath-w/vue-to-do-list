@@ -5,22 +5,57 @@
 // 	}
 // };
 
-var toDoPanel = new Vue( {
-	el : '#toDoPanel',
+var taskPanel = new Vue( {
+	el : '#taskPanel',
 	data : {
-		newToDoItem : '',
-		toDoListItems : [ 'Buy milk', 'Buy cheese' ]
+		newTaskItem : '',
+		taskItems : [
+			{ id : 0, title : 'Buy milk' },
+			{ id : 1, title : 'Buy cheese' }
+		],
+		nextTaskItemId : 2
 	},
 	methods : {
-		addToToDoItem : addToToDoItem
+		addTask : addTask,
+		removeTask : removeTask,
+		findIndexFromId : findIndexFromId
 	}
 });
 
-function addToToDoItem( newItem ) {
-	console.log( 'addToToDoItem()' );
-	console.log( 'addToToDoItem() - this.newToDoItem: ', this.newToDoItem );
+function addTask() {
+	console.log( 'addTask()' );
+	console.log( 'addTask() - this.newTaskItem: ', this.newTaskItem );
 
-	this.toDoListItems.push( this.newToDoItem );
+	if ( this.newTaskItem !== '' ) {
+		console.log( 'addTask() - this.taskItems(1): ', this.taskItems );
+		
+		this.taskItems.push( 
+			{ 
+				id : this.nextTaskItemId++ , 
+				title : this.newTaskItem 
+			} 
+		);
 
-	this.newToDoItem = '';
+		console.log( 'addTask() - this.taskItems(2): ', this.taskItems );
+
+		this.newTaskItem = '';
+	}
+}
+
+function removeTask( id ) {
+	console.log( 'removeTask()' );
+	console.log( 'removeTask() - id: ', id );
+
+	console.log( 'removeTask() - this.taskItems(1): ', this.taskItems );
+
+	var index = this.findIndexFromId( id );
+	this.taskItems.splice( index, 1 );
+
+	console.log( 'removeTask() - this.taskItems(2): ', this.taskItems );	
+}
+
+function findIndexFromId( id ) {
+	return this.taskItems.findIndex( function( task ) {
+		return id === task.id; 
+	} );
 }

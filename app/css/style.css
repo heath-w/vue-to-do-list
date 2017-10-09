@@ -1,10 +1,10 @@
+[v-cloak] { 
+	display: none;
+}
+
 * {
 	margin : 0px;
 	padding : 0px;
-}
-
-[v-cloak] {
-	display : none;
 }
 
 ul {
